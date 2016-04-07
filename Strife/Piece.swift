@@ -40,19 +40,33 @@ enum PieceType: Int {
 extension PieceType: CustomStringConvertible {
   var description: String {
     switch self {
-    case .Melee:   return "Melee"
-    case .Ranged:  return "Ranged"
-    case .Healing: return "Healing"
-    case .Magic:   return "Magic"
-    case .Coin:    return "Coin"
+    case .Melee:   return "melee"
+    case .Ranged:  return "ranged"
+    case .Healing: return "healing"
+    case .Magic:   return "magic"
+    case .Coin:    return "coin"
     }
   }
 }
 
-struct Piece {
+/// Represents a single Piece on a board
+class Piece {
+  /// The column (y) the Piece is in
   var column: Int
+  /// The row (x) the Piece is in
   var row: Int
+  /// The type of the Piece
   var type: PieceType
+  /// The sprite used to display this piece
+  lazy var sprite: SKSpriteNode = {
+    return SKSpriteNode(texture: SKTextureAtlas(named: "Pieces").textureNamed(self.type.description))
+  }()
+  
+  init(column: Int, row: Int, type: PieceType) {
+    self.column = column
+    self.row = row
+    self.type = type
+  }
 }
 
 // MARK: - CustomStringConvertible
@@ -64,6 +78,15 @@ extension Piece: CustomStringConvertible {
 // MARK: - Equatable
 
 extension Piece: Equatable {}
+
 func ==(lhs: Piece, rhs: Piece) -> Bool {
   return lhs.column == rhs.column && lhs.row == rhs.row && lhs.type == rhs.type
+}
+
+// MARK: - Hashable
+
+extension Piece: Hashable {
+  var hashValue: Int {
+    return column + row + type.rawValue
+  }
 }

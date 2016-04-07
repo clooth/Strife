@@ -126,7 +126,7 @@ public class Siren: NSObject {
     /**
         The debug flag, which is disabled by default.
     
-        When enabled, a stream of println() statements are logged to your console when a version check is performed.
+        When enabled, a stream of print() statements are logged to your console when a version check is performed.
     */
     public lazy var debugEnabled = false
     

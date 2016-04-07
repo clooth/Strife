@@ -30,8 +30,8 @@ class PieceSpec: QuickSpec {
         .Magic: "Magic",
         .Coin: "Coin"
       ]
-      for (type, name) in testMap.enumerate() {
-        expect()
+      for (type, name) in testMap {
+        expect(type.description).to(equal(name))
       }
     }
     
